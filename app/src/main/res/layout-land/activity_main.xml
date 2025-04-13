@@ -1,118 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightgray"
+    android:fillViewport="true"
     tools:context=".MainActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/loginCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="12dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="668dp"
-            android:layout_height="378dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="32dp">
-
-            <ImageView
-                android:id="@+id/logoImage"
-                android:layout_width="83dp"
-                android:layout_height="83dp"
-                android:layout_marginBottom="16dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/logo" />
-
-            <TextView
-                android:id="@+id/loginTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:text="Jelentkezz be!"
-                android:textColor="@color/purple1"
-                android:textSize="26sp"
-                android:textStyle="bold" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/loginCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center"
+                android:baselineAligned="false">
 
-                <EditText
-                    android:id="@+id/emailID"
-                    android:layout_width="671dp"
+                <!-- Bal oldal: logó + cím -->
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:hint="E-mail"
-                    android:paddingBottom="8dp"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="@color/gray"
-                    android:textSize="16sp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_marginEnd="16dp">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@android:color/black" />
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/logoImage"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:src="@drawable/logo"
+                        android:contentDescription="App logo"
+                        android:layout_marginBottom="16dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/loginTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/jelentkezz_be"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/purple1" />
+                </LinearLayout>
 
-                <EditText
-                    android:id="@+id/passwordID"
-                    android:layout_width="match_parent"
+                <!-- Jobb oldal: mezők + gombok -->
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:hint="Jelszó"
-                    android:inputType="textPassword"
-                    android:paddingBottom="8dp"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="@color/gray"
-                    android:textSize="16sp" />
+                    android:layout_weight="2"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@android:color/black" />
+                    <EditText
+                        android:id="@+id/emailID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/e_mail"
+                        android:backgroundTint="@android:color/black"
+                        android:inputType="textEmailAddress"
+                        android:layout_marginBottom="12dp"
+                        />
+
+                    <EditText
+                        android:id="@+id/passwordID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/jelsz"
+                        android:backgroundTint="@android:color/black"
+                        android:inputType="textPassword"
+                        android:layout_marginBottom="16dp" />
+
+                    <Button
+                        android:id="@+id/loginButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bejelentkez_s"
+                        android:backgroundTint="@color/purple1"
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="8dp"
+                        android:onClick="login" />
+
+                    <Button
+                        android:id="@+id/guestLoginButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bel_p_s_vend_gk_nt"
+                        android:backgroundTint="@color/gray"
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="8dp"
+                        android:onClick="loginAsGuest" />
+
+                    <FrameLayout
+                        android:id="@+id/googleLoginButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/google_button_bg"
+                        android:layout_marginBottom="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="loginWithGoogle">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="start|center_vertical"
+                            android:layout_marginStart="16dp"
+                            android:src="@drawable/ic_google_logo"
+                            android:contentDescription="@string/google_ikon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/bejelentkez_s_google_fi_kkal"
+                            android:textColor="#5F6368"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+
+
+                    <TextView
+                        android:id="@+id/registerText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nincs_fi_kod_regisztr_lj_itt"
+                        android:textColor="@color/purple1"
+                        android:textSize="14sp"
+                        android:textStyle="italic"
+                        android:onClick="register" />
+                </LinearLayout>
             </LinearLayout>
-
-            <Button
-                android:id="@+id/loginButton"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/purple1"
-                android:onClick="login"
-                android:text="Bejelentkezés"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/registerText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nincs fiókod? Regisztrálj itt!"
-                android:textColor="@color/purple1"
-                android:textSize="14sp"
-                android:textStyle="italic" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

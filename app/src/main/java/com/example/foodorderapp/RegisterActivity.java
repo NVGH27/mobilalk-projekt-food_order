@@ -6,10 +6,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String LOG_TAG = RegisterActivity.class.getName();
@@ -22,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText confirmPasswordET;
 
     private SharedPreferences preferences;
+    private FirebaseAuth mauth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +61,14 @@ public class RegisterActivity extends AppCompatActivity {
         String email = preferences.getString("email", "");
         emailET.setText(email);
 
+        mauth = FirebaseAuth.getInstance();
+
         Log.i(LOG_TAG, "onCreate");
     }
 
     private void startOrder(/*user data*/){
         Intent intent = new Intent(this, RestaurantListActivity.class);
-        intent.putExtra("SECRET_KEY", SECRET_KEY);
+        //intent.putExtra("SECRET_KEY", SECRET_KEY);
         startActivity(intent);
     }
 
@@ -115,6 +125,18 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         Log.i(LOG_TAG, "Email: " + email);
-        startOrder();
+        // startOrder();
+        mauth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Log.d(LOG_TAG, "Regisztráció sikeres!");
+                    startOrder();
+                } else {
+                    Log.d(LOG_TAG, "Sikertelen regisztráció");
+                    Toast.makeText(RegisterActivity.this, "Regisztráció sikertelen: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 }

@@ -33,7 +33,7 @@
                 android:id="@+id/logoImage"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:contentDescription="icon"
+                android:contentDescription="@string/icon"
                 android:src="@drawable/logo"
                 android:scaleType="centerInside"
                 android:layout_marginBottom="16dp" />
@@ -63,7 +63,8 @@
                     android:textColor="@android:color/black"
                     android:textColorHint="@color/gray"
                     android:paddingBottom="8dp"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:inputType="textEmailAddress"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -94,6 +95,7 @@
                     android:layout_height="2dp"
                     android:background="@android:color/black" />
             </LinearLayout>
+
             <Button
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
@@ -102,7 +104,46 @@
                 android:textColor="@android:color/white"
                 android:backgroundTint="@color/purple1"
                 android:layout_marginBottom="16dp"
-                android:onClick="login"/>
+                android:onClick="login" />
+
+            <Button
+                android:id="@+id/guestLoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/bel_p_s_vend_gk_nt"
+                android:backgroundTint="@color/gray"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="8dp"
+                android:onClick="loginAsGuest" />
+
+            <LinearLayout
+                android:id="@+id/googleLoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/google_button_bg"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:onClick="loginWithGoogle">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_google_logo"
+                    android:contentDescription="@string/google_ikon"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bejelentkez_s_google_fi_kkal"
+                    android:textColor="#5F6368"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/registerText"
@@ -112,8 +153,8 @@
                 android:textColor="@color/purple1"
                 android:textSize="14sp"
                 android:textStyle="italic"
+                android:layout_marginTop="16dp"
                 android:onClick="register"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

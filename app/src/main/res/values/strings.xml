@@ -10,4 +10,13 @@
     <string name="jelsz_meger_s_t_se">Jelszó megerősítése</string>
     <string name="keresztn_v">Keresztnév</string>
     <string name="vezet_kn_v">Vezetéknév</string>
+    <string name="bejelentkez_s_google_fi_kkal">Bejelentkezés Google fiókkal</string>
+    <string name="google_ikon">Google ikon</string>
+    <string name="bel_p_s_vend_gk_nt">Belépés vendégként</string>
+    <string name="icon">icon</string>
+    <string name="f_oldal">Főoldal</string>
+    <string name="kos_r">Kosár</string>
+    <string name="profil">Profil</string>
+    <string name="ez_itt_a_f_oldal">Ez itt a főoldal</string>
+    <string name="kedvencek">Kedvencek</string>
 </resources>
