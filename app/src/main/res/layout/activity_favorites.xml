@@ -2,17 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/restaurantListLayout"
+    android:id="@+id/favoriteActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightgray"
-    tools:context=".RestaurantListActivity">
+    tools:context=".FavoritesActivity">
 
     <TextView
         android:id="@+id/favoriteTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Főoldal"
+        android:text="Kedvenc Ételek"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"

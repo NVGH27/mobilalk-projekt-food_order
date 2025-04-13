@@ -1,25 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:ignore="ExtraText">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
-    android:title="@string/f_oldal" />
+        android:title="@string/f_oldal"/>
 
     <item
         android:id="@+id/nav_favorites"
-        android:title="@string/kedvencek"/>
-    <!-- android:icon="@drawable/ic_favorite" -->
+        android:icon="@drawable/ic_favs"
+        android:title="@string/kedvencek"
+        />
 
     <item
         android:id="@+id/nav_cart"
         android:icon="@drawable/ic_cart"
-    android:title="@string/kos_r" />
+        android:title="@string/kos_r" />
 
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_profile"
-    android:title="@string/profil" />
+        android:title="@string/profil" />
 </menu>
