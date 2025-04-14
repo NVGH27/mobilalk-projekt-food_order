@@ -97,8 +97,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        String email = emailET.getText().toString();
-        String password = passwordET.getText().toString();
+        String email = emailET.getText().toString().trim();
+        String password = passwordET.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            emailET.setError("Email is required");
+            emailET.requestFocus();
+            return;
+        }
+
+        if (password.isEmpty()) {
+            passwordET.setError("Password is required");
+            passwordET.requestFocus();
+            return;
+        }
+
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override

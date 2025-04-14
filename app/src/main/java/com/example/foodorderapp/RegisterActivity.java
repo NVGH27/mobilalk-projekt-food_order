@@ -119,6 +119,36 @@ public class RegisterActivity extends AppCompatActivity {
         String password = passwordET.getText().toString();
         String confirmPassword = confirmPasswordET.getText().toString();
 
+        if (firstName.isEmpty()) {
+            firstNameET.setError("First name is required");
+            firstNameET.requestFocus();
+            return;
+        }
+
+        if (lastName.isEmpty()) {
+            lastNameET.setError("Last name is required");
+            lastNameET.requestFocus();
+            return;
+        }
+
+        if (email.isEmpty()) {
+            emailET.setError("Email is required");
+            emailET.requestFocus();
+            return;
+        }
+
+        if (password.isEmpty()) {
+            passwordET.setError("Password is required");
+            passwordET.requestFocus();
+            return;
+        }
+
+        if (confirmPassword.isEmpty()) {
+            confirmPasswordET.setError("Confirm password is required");
+            confirmPasswordET.requestFocus();
+            return;
+        }
+
         if(!password.equals(confirmPassword)) {
             Log.e(LOG_TAG, "Passwords do not match");
             return;
