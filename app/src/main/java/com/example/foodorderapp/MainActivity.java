@@ -112,13 +112,16 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Log.d(LOG_TAG, "Sikeres belépés!");
-                    startOrder();
+                    // Csak itt indítsd az intentet és finish-el az activity-t
+                    Intent intent = new Intent(MainActivity.this, RestaurantListActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
                 } else {
                     Log.d(LOG_TAG, "Sikertelen belépés!");
                     Toast.makeText(MainActivity.this, "Belépés sikertelen: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();

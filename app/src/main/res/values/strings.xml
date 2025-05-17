@@ -19,4 +19,6 @@
     <string name="profil">Profil</string>
     <string name="ez_itt_a_f_oldal">Ez itt a főoldal</string>
     <string name="kedvencek">Kedvencek</string>
+    <string name="szem_lyes_adatok">Személyes adatok</string>
+    <string name="sz_let_si_d_tum_yyyy_mm_dd">Születési dátum (YYYY-MM-DD)</string>
 </resources>

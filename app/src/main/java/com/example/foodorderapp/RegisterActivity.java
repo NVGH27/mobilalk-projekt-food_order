@@ -15,8 +15,15 @@ import androidx.core.view.ViewCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String LOG_TAG = RegisterActivity.class.getName();
@@ -30,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
     private FirebaseAuth mauth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +45,15 @@ public class RegisterActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_register);
 
-        View rootView = findViewById(android.R.id.content); // Replace with the correct ID if needed
+        View rootView = findViewById(android.R.id.content);
         if (rootView != null) {
-            ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
-                // Handle window insets if needed
-                return insets;
-            });
+            ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> insets);
         } else {
             throw new NullPointerException("Root view is null. Check your layout file.");
         }
 
         int secret_key = getIntent().getIntExtra("SECRET_KEY", 0);
-        if (secret_key != 99) {
+        if (secret_key != SECRET_KEY) {
             finish();
         }
 
@@ -62,60 +67,25 @@ public class RegisterActivity extends AppCompatActivity {
         emailET.setText(email);
 
         mauth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         Log.i(LOG_TAG, "onCreate");
     }
 
-    private void startOrder(/*user data*/){
+    private void startOrder() {
         Intent intent = new Intent(this, RestaurantListActivity.class);
-        //intent.putExtra("SECRET_KEY", SECRET_KEY);
         startActivity(intent);
+        finish();
     }
 
     public void login(View view) {
         finish();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i(LOG_TAG, "onDestroy");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i(LOG_TAG, "onStart");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i(LOG_TAG, "onStop");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(LOG_TAG, "onPause");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(LOG_TAG, "onResume");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i(LOG_TAG, "onRestart");
-    }
-
     public void register(View view) {
-        String firstName = firstNameET.getText().toString();
-        String lastName = lastNameET.getText().toString();
-        String email = emailET.getText().toString();
+        String firstName = firstNameET.getText().toString().trim();
+        String lastName = lastNameET.getText().toString().trim();
+        String email = emailET.getText().toString().trim();
         String password = passwordET.getText().toString();
         String confirmPassword = confirmPasswordET.getText().toString();
 
@@ -149,24 +119,83 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        if(!password.equals(confirmPassword)) {
-            Log.e(LOG_TAG, "Passwords do not match");
+        if (!password.equals(confirmPassword)) {
+            passwordET.setError("Passwords do not match");
+            passwordET.requestFocus();
             return;
         }
 
         Log.i(LOG_TAG, "Email: " + email);
-        // startOrder();
-        mauth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Log.d(LOG_TAG, "Regisztráció sikeres!");
+
+        mauth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(LOG_TAG, "Registration successful!");
+                            FirebaseUser user = mauth.getCurrentUser();
+                            if (user != null) {
+                                createUserInFirestore(user.getUid(), firstName, lastName);
+                            }
+                        } else {
+                            Log.d(LOG_TAG, "Registration failed");
+                            Toast.makeText(RegisterActivity.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    private void createUserInFirestore(String userId, String firstName, String lastName) {
+        // Felhasználói adatok
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("firstName", firstName);
+        userMap.put("lastName", lastName);
+        userMap.put("createdAt", FieldValue.serverTimestamp());
+
+        // Üres szállítási cím struktúra
+        Map<String, Object> shippingAddress = new HashMap<>();
+        shippingAddress.put("addressLine1", "");
+        shippingAddress.put("addressLine2", "");
+        shippingAddress.put("city", "");
+        shippingAddress.put("postalCode", "");
+        userMap.put("shippingAddress", shippingAddress);
+
+        userMap.put("birthDate", ""); // üres születésnap (később frissíthető)
+
+        db.collection("Users").document(userId)
+                .set(userMap)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(LOG_TAG, "User document created in Firestore");
+
+                    // Üres Favorites és Cart gyűjtemény létrehozása (egy üres dokumentummal)
+                    createEmptyCollections(userId);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(LOG_TAG, "Error creating user document", e);
+                    Toast.makeText(RegisterActivity.this, "Hiba a felhasználó mentésekor: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
+    }
+
+    private void createEmptyCollections(String userId) {
+        Map<String, Object> emptyMap = new HashMap<>();
+
+        db.collection("Users").document(userId)
+                .collection("Favorites").document("init")
+                .set(emptyMap)
+                .addOnSuccessListener(aVoid -> Log.d(LOG_TAG, "Favorites collection created"))
+                .addOnFailureListener(e -> Log.e(LOG_TAG, "Failed to create Favorites collection", e));
+
+        db.collection("Users").document(userId)
+                .collection("Cart").document("init")
+                .set(emptyMap)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(LOG_TAG, "Cart collection created");
+                    // Minden sikeres, indulhat a következő Activity
                     startOrder();
-                } else {
-                    Log.d(LOG_TAG, "Sikertelen regisztráció");
-                    Toast.makeText(RegisterActivity.this, "Regisztráció sikertelen: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(LOG_TAG, "Failed to create Cart collection", e);
+                    Toast.makeText(RegisterActivity.this, "Hiba a kosár létrehozásakor: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
     }
 }
