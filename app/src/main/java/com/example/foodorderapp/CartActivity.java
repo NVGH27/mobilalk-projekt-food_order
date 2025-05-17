@@ -82,6 +82,8 @@ public class CartActivity extends AppCompatActivity {
         db.collection("Users")
                 .document(userId)
                 .collection("Cart")
+                .orderBy("price")
+                .limit(10)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -111,6 +113,8 @@ public class CartActivity extends AppCompatActivity {
         db.collection("Users")
                 .document(userId)
                 .collection("Cart")
+                .orderBy("price")
+                .limit(10)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

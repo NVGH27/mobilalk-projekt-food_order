@@ -76,6 +76,8 @@ public class FavoritesActivity extends AppCompatActivity {
         db.collection("Users")
                 .document(userId)
                 .collection("Favorites")
+                .orderBy("price")
+                .limit(10)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
