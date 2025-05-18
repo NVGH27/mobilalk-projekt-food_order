@@ -21,4 +21,10 @@
     <string name="kedvencek">Kedvencek</string>
     <string name="szem_lyes_adatok">Személyes adatok</string>
     <string name="sz_let_si_d_tum_yyyy_mm_dd">Születési dátum (YYYY-MM-DD)</string>
+    <string name="item">item</string>
+    <string name="men_neve">Menü neve</string>
+    <string name="le_r_s">Leírás</string>
+    <string name="_1500_ft">1500 Ft</string>
+    <string name="kos_rba">Kosárba</string>
+    <string name="kedvenc">Kedvenc</string>
 </resources>

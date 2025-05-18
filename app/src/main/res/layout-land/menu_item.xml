@@ -9,6 +9,7 @@
         android:id="@+id/menuItemImage"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:contentDescription="@string/item"
         android:scaleType="centerCrop"
         android:src="@drawable/placeholder_image"/>
 
@@ -24,7 +25,7 @@
             android:id="@+id/menuItemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Menü neve"
+            android:text="@string/men_neve"
             android:textSize="16sp"
             android:textStyle="bold"/>
 
@@ -32,14 +33,14 @@
             android:id="@+id/menuItemDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Leírás"
+            android:text="@string/le_r_s"
             android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/menuItemPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1500 Ft"
+            android:text="@string/_1500_ft"
             android:textSize="14sp"
             android:textColor="#FF5722"/>
     </LinearLayout>
@@ -55,7 +56,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_favs"
-            android:contentDescription="Kedvenc"/>
+            android:contentDescription="@string/kedvenc"/>
 
         <ImageView
             android:id="@+id/cartButton"
@@ -63,7 +64,7 @@
             android:layout_height="24dp"
             android:layout_marginTop="8dp"
             android:src="@drawable/ic_cart"
-            android:contentDescription="Kosárba"/>
+            android:contentDescription="@string/kos_rba"/>
     </LinearLayout>
 
 </LinearLayout>
