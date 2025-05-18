@@ -66,7 +66,7 @@ public class RestaurantListActivity extends AppCompatActivity {
             intent.putExtra("restaurantId", restaurant.getId()); // vagy bármilyen azonosító
             startActivity(intent);
         });
-        recyclerView.setAdapter(adapter);        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
 
         db = FirebaseFirestore.getInstance();
 

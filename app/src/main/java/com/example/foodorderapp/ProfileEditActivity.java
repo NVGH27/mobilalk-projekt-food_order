@@ -37,7 +37,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (currentUser == null) {
+        if (currentUser == null || currentUser.isAnonymous()) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
             return;
